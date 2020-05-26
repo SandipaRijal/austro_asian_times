@@ -17,15 +17,15 @@
 
 						echo "";
 					 }else{
-						 echo "<li><a href='/user_page'>Home</a></li>";
-						 echo "<li><a href='/user_page/post'>post</a></li>";
+						 echo "<li><a href='/editor'>Home</a></li>";
+						 echo "<li><a href='/editor/post'>post</a></li>";
 						 echo "<li><a href='/signout'>logout</a></li>";
 					 }
 					?>
 				</ul>
 				<h3> 
 					<?php
-					if(!empty($_SESSION['first_name']) && empty($_SESSION['admin'])){
+					if(!empty($_SESSION['first_name'])){
 						echo "Welcome ".$_SESSION['first_name'];
 					}
 					?>
@@ -39,7 +39,7 @@
 				echo "<p id='flash'>{$flash}</p>";
 			  }
 
-			  require VIEWS."/user_page/{$content}.php";
+			  require VIEWS."/editor_page/{$content}.php";
 			?>
 			</div> <!-- end content -->
 

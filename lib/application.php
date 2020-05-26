@@ -3,7 +3,7 @@
 function get($route,$callback){
 	
    if($route === get_request() && get_method() === "GET"){
-     echo $callback($route);
+     echo $callback();
    }
    else{
       return false;
@@ -31,22 +31,23 @@ function put($route,$callback){
 # The DELETE callback is left to you to work out
 
 # We need this for when none of the routes match or some other problem i.e. "page not found"
-function error_404($callback){
-	echo $callback();
+function error_404(){
+	header("HTTP/1.0 404 Not Found");
+	echo render("404","standard","404");
 }
 
 
 /* Application functions called by the controller code */
-function render_user($messages, $layout, $content){
+function render_user($messages, $layout, $content, $folder){
 	
 	$flash=get_flash();
 	
    
-   if(!empty($layout)){
-      require VIEWS."/user_page/{$layout}.layout.php";
+   if(!empty($layout) && !empty($folder)){
+      require VIEWS."/{$folder}/{$layout}.layout.php";
    }
    else{
-      // What is this part for? When would we not need a layout? Think about it.
+     // we need to think 
 	   
    }
    exit();
@@ -124,7 +125,7 @@ function set_session_message($key,$message){
 function get_session_message($key){
    $msg = "";
    if(!empty($key) && is_string($key)){
-      //session_start();
+     if(!isset($_SESSION)){session_start();}
       if(!empty($_SESSION[$key])){
          $msg = $_SESSION[$key];
          unset($_SESSION[$key]);
@@ -144,21 +145,27 @@ function get_flash(){
 
 
 //logged in 
-function set_session_user(){
-   
-      session_start();
-      $_SESSION['user_id'] = 2;    
-}
 
 function signout(){
 	session_start();
+	$_SESSION['user_id'] = '';
+	$_SESSION['first_name'] = '';
+	$_SESSION['admin']='';
 	unset($_SESSION['user_id']);
-//	session_destroy();
+	unset($_SESSION['first_name']);
+	unset($_SESSION['admin']);
+	
 	session_write_close();
 }
 
 
-
+function get_url_id(){
+	if(isset($_GET['id'])){
+		return $_GET['id'];
+	}else{
+		return $_GET['id'] ='';
+	}
+}
 
 
 

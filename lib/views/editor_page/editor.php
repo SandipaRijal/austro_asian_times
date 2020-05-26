@@ -1,5 +1,6 @@
-<h1>Welcome to your posts.</h1>
-<form action="/user_page/post/add" method="post">
+<h1>Admin</h1>
+
+<form action="/?user_page/post/add" method="post">
 	<input type='hidden' name='_method' value='post' />
 	<label for='name'>Title</label>
 	<input type='text' id='post-title' name='post-title' required/>
@@ -9,6 +10,7 @@
 	<input type='date' id='post-date' name='post-date' required/>
 	<input type='submit' value='Add' />	
 </form>
+
 <table class="user-post-table">
 <?php
 if(!empty($messages['data'])){
